@@ -1,0 +1,41 @@
+version: 0.2
+
+phases:
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - mkdir certs
+      - aws s3 cp s3://$S3_OBJECT_STORE/certs/root-ca.crt ./certs/
+      - aws s3 cp s3://$S3_OBJECT_STORE/certs/certificate.pem.crt ./certs/
+      - aws s3 cp s3://$S3_OBJECT_STORE/certs/private.pem.key ./certs/
+      - aws s3 cp s3://$S3_OBJECT_STORE/certs/public.pem.key ./certs/
+      - aws s3 cp s3://$S3_OBJECT_STORE/certs/certificate-id.txt ./certs/
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo Build completed on `date`
+
+      - echo Creating the Artifacts...
+      - containerid=$(docker run --detach --rm --env IDLE=true -t $IMAGE_REPO_NAME)
+      - docker cp $containerid:/home/user/certs/ certs/
+      - docker cp $containerid:/home/user/dist/ dist/
+      - docker cp $containerid:/home/user/node_modules/ node_modules/
+      - docker rm -v $containerid
+
+artifacts:
+  name: migd_$(date +%Y-%m-%d)_$CODEBUILD_BUILD_NUMBER.zip
+  files:
+    - 'certs/*.*'
+    - 'dist/*.*'
+    - 'node_modules/**/*'

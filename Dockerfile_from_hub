@@ -1,0 +1,4 @@
+FROM claudeducharme/iot-server:v0.01
+WORKDIR /home/user/certs
+COPY ./certs/* ./
+WORKDIR /home/user/

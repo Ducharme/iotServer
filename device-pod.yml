@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: device
+spec:
+  containers:
+  - name: iotServer
+    image: <accountid>.dkr.ecr.<region>.amazonaws.com/iot-server:latest
+    imagePullPolicy: Always
+    env:
+    - name: ENDPOINT
+      value: "<example>-ats.iot.ap-southeast-1.amazonaws.com"
+    - name: STREAMID_REQUEST_TOPIC
+      value: "lafleet/devices/streamId/+/request"
+    - name: STREAMID_REPLY_TOPIC
+      value: "lafleet/devices/streamId/+/reply"
+    - name: CA_FILE
+      value: "./certs/root-ca.crt"
+    - name: CERT_FILE
+      value: "./certs/certificate.pem.crt"
+    - name: KEY_FILE
+      value: "./certs/private.pem.key"
+    ports:
+    - containerPort: 8884
+    resources:
+      limits:
+        memory: "20Mi"
+      requests:
+        memory: "10Mi"
+

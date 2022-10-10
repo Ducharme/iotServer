@@ -1,0 +1,42 @@
+{
+    "name": "iot-server",
+    "version": "0.0.1",
+    "description": "LaFleet - IoT Server",
+    "homepage": "https://github.com/Ducharme/iot-server",
+    "keywords": [ "aws", "iot", "lafleet" ],
+    "author": "Claude Ducharme",
+    "license": "MIT",
+    "main": "./dist/main.js",
+    "types": "./dist/main.d.ts",
+    "scripts": {
+        "tsc": "tsc -p ./tsconfig.json",
+        "prepare": "npm run tsc",
+        "build": "tsc",
+        "debug": "npm run start:cmdargs",
+        "start": "npm run start:cmdargs",
+        "start:idle-arg": "node dist/main.js --idle true",
+        "start:idle-env": "IDLE=true node dist/main.js",
+        "start:cmdargs": "sh start-with-cmdargs.sh .env.production",
+        "start:envvars": "sh start-with-envvars.sh .env.production",
+        "refresh:certs": "sh refresh-local-certs.sh"
+    },
+    "dependencies": {
+        "aws-iot-device-sdk-v2": "^1.8.9",
+        "yargs": "^14.2.3"
+    },
+    "devDependencies": {
+        "typescript": "^4.4.3",
+        "@types/node": "^14.14.31",
+        "@typescript-eslint/types": "4.31.0",
+        "dotenv": "^14.2.0"
+    },
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+            "@typescript-eslint"
+        ],
+        "extends": [
+            "plugin:@typescript-eslint/recommended"
+        ]
+    }
+}
