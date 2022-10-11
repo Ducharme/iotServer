@@ -21,7 +21,7 @@ spec:
     - name: KEY_FILE
       value: "./certs/private.pem.key"
     ports:
-    - containerPort: 8884
+    - containerPort: 8885
     resources:
       limits:
         memory: "20Mi"

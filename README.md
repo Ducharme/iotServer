@@ -16,7 +16,7 @@ docker build --tag iotServer:v0.01 .
 
 Spawn the docker copntainer
 ```
-docker run -it -p 8884:8884 -m 20M iotServer:v0.01 --endpoint example-ats.iot.us-east-1.amazonaws.com --streamIdRequestTopic lafleet/devices/streamId/+/request --streamIdReplyTopic lafleet/devices/streamId/+/reply --interval 1000 --count 5 --cert_file /home/user/certs/certificate.pem.crt --key_file /home/user/certs/private.pem.key
+docker run -it -p 8886:8885 -m 20M iotServer:v0.01 --endpoint example-ats.iot.us-east-1.amazonaws.com --streamIdRequestTopic lafleet/devices/streamId/+/request --streamIdReplyTopic lafleet/devices/streamId/+/reply --interval 1000 --count 5 --cert_file /home/user/certs/certificate.pem.crt --key_file /home/user/certs/private.pem.key
 ```
 
 ## Playing around

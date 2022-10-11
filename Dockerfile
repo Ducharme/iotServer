@@ -18,5 +18,5 @@ WORKDIR /home/user/
 COPY --from=deps /home/user/node_modules ./node_modules/
 COPY --from=build /home/user/certs ./certs/
 COPY --from=build /home/user/dist ./dist/
-EXPOSE 8884
+EXPOSE 8885
 ENTRYPOINT [ "node",  "/home/user/dist/main.js" ]
