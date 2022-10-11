@@ -46,8 +46,9 @@ class Session {
 
             // Reply to the request
             var topicReply  = this.replyTopic.replace("+", deviceId);
-            const streamId = 1; // TODO: Get streamId from Redis
-            const msg = { deviceId: deviceId, streamId: streamId, serverId: this.clientId };
+            const streamId = 0; // TODO: Get streamId from Redis
+            const seqId = 0; // TODO: Get seq from Redis
+            const msg = { deviceId: deviceId, streamId: streamId, seq: seqId, serverId: this.clientId };
             const jsonReply = JSON.stringify(msg);
             console.log(`Publishing to ${topicReply} message ${jsonReply}`);
             var res = await this.conn.publish(topicReply, jsonReply, mqtt.QoS.AtLeastOnce);
