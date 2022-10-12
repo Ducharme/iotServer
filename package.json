@@ -1,7 +1,7 @@
 {
     "name": "iot-server",
     "version": "0.0.1",
-    "description": "LaFleet - IoT Server",
+    "description": "LaFleet - IoT Server based on aws-iot-device-sdk-v2",
     "homepage": "https://github.com/Ducharme/iot-server",
     "keywords": [ "aws", "iot", "lafleet" ],
     "author": "Claude Ducharme",
