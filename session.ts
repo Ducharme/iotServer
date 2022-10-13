@@ -16,18 +16,10 @@ class Session {
     }
    
     public async init() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                this.listenToStreamIdRequests(resolve);
-            }
-            catch (error) {
-                console.error(error);
-                reject(error);
-            }
-        });
+        this.listenToStreamIdRequests();
     }
 
-    private async listenToStreamIdRequests(resolve: any) {
+    private async listenToStreamIdRequests() {
         const decoder = new TextDecoder('utf8');
 
         const onPublish = async (receivedTopic: string, payload: ArrayBuffer, dup: boolean, qos: mqtt.QoS, retain: boolean) => {
@@ -60,9 +52,9 @@ class Session {
             }
         };
 
-        var res = await this.conn.subscribe(this.requestTopic, mqtt.QoS.AtLeastOnce, onPublish);
+        var res = await this.conn.subscribe(this.requestTopic, mqtt.QoS.AtLeastOnce, onPublish)
+            .catch((ex) => {console.error(`Failed to subscribe topic ${this.requestTopic} -> ${ex}`);});
         console.log(`Subscribing returned ${JSON.stringify(res)}`);
-        resolve("Subscribed");
     }
 }
 
