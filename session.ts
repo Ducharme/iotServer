@@ -45,15 +45,16 @@ class Session {
                 const msg = { deviceId: deviceId, streamId: streamId, seq: seqId, serverId: this.clientId };
                 const jsonReply = JSON.stringify(msg);
                 console.log(`Publishing to ${topicReply} message ${jsonReply}`);
-                var res = await this.conn.publish(topicReply, jsonReply, mqtt.QoS.AtLeastOnce);
+                var res = await this.conn.publish(topicReply, jsonReply, mqtt.QoS.AtLeastOnce)
+                    .catch((ex1 : any) => {console.error(`Failed to publish on topic ${this.requestTopic} message "${jsonReply}" -> ${ex1}`);});
                 console.log(`Published to ${topicReply} returned ${JSON.stringify(res)}`);
-            } catch (ex) {
-                console.error(`Failed to process received message "${text}" -> ${ex}`);
+            } catch (ex2: any) {
+                console.error(`Failed to process received message "${text}" -> ${ex2}`);
             }
         };
 
         var res = await this.conn.subscribe(this.requestTopic, mqtt.QoS.AtLeastOnce, onPublish)
-            .catch((ex) => {console.error(`Failed to subscribe topic ${this.requestTopic} -> ${ex}`);});
+            .catch((ex : any) => {console.error(`Failed to subscribe topic ${this.requestTopic} -> ${ex}`);});
         console.log(`Subscribing returned ${JSON.stringify(res)}`);
     }
 }
