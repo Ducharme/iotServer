@@ -38,6 +38,7 @@ class Client {
         config_builder.with_clean_session(false);
         config_builder.with_client_id(clientId);
         config_builder.with_endpoint(argv.endpoint);
+        config_builder.with_keep_alive_seconds(60);
 
         const config = config_builder.build();
         const client = new mqtt.MqttClient(client_bootstrap);
