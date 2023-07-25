@@ -21,14 +21,14 @@
         "refresh:certs": "sh refresh-local-certs.sh"
     },
     "dependencies": {
-        "aws-iot-device-sdk-v2": "^1.8.9",
-        "yargs": "^14.2.3"
+        "aws-iot-device-sdk-v2": "^1.14.0",
+        "yargs": "^17.7.2"
     },
     "devDependencies": {
-        "typescript": "^4.4.3",
-        "@types/node": "^14.14.31",
-        "@typescript-eslint/types": "4.31.0",
-        "dotenv": "^14.2.0"
+        "typescript": "^5.1.6",
+        "@types/node": "^20.4.5",
+        "@typescript-eslint/types": "6.2.0",
+        "dotenv": "^16.3.1"
     },
     "eslintConfig": {
         "parser": "@typescript-eslint/parser",
